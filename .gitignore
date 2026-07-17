@@ -1,0 +1,12 @@
+# never commit secrets — this repo is public and only needs public addresses/ABIs
+.env
+.env.*
+*.key
+*.pem
+
+# tooling
+node_modules/
+.vercel
+.DS_Store
+Thumbs.db
+*.log

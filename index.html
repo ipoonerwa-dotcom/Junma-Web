@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>骏马 JUNMA · 公平公正公开透明</title>
+  <meta name="description" content="骏马 JUNMA — PancakeSwap V2 公平发射。3/3 税全进金库、每分钟自动回购销毁、盈利税只割赢家、质押返本 120%。" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐴</text></svg>" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- NAV -->
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <div class="brand"><span class="emblem">🐴</span> <span>骏马 <b>JUNMA</b></span></div>
+      <nav class="nav-links">
+        <a data-view="home" class="active">首页</a>
+        <a data-view="stake">质押</a>
+        <a data-view="bind">绑定关系</a>
+      </nav>
+      <div class="nav-spacer"></div>
+      <div class="net-chip" id="netChip"><span class="dot"></span><span id="netName">—</span></div>
+      <button class="btn btn-primary btn-sm" id="connectBtn">连接钱包</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- ============ HOME ============ -->
+    <section class="view active" id="view-home">
+      <div class="hero">
+        <div class="emblem-lg">🐴</div>
+        <h1>骏马 JUNMA</h1>
+        <div class="tag">一马当先 · 马到成功</div>
+        <div class="fairness">
+          <span class="pill">公平</span><span class="pill">公正</span>
+          <span class="pill">公开</span><span class="pill">透明</span>
+        </div>
+        <div class="cta">
+          <button class="btn btn-primary" data-view="stake">开始质押 →</button>
+          <a class="btn btn-ghost" id="tokenScanLink" target="_blank" rel="noopener">代币合约 · BscScan</a>
+        </div>
+      </div>
+
+      <!-- live stats -->
+      <div class="grid grid-4 stats">
+        <div class="card stat"><div class="v" id="stBurned">—</div><div class="k">已回购销毁 (JUNMA)</div></div>
+        <div class="card stat"><div class="v" id="stTreasury">—</div><div class="k">金库弹药 (BNB)</div></div>
+        <div class="card stat"><div class="v" id="stStaked">—</div><div class="k">全网质押 (JUNMA)</div></div>
+        <div class="card stat"><div class="v" id="stCadence">60s</div><div class="k">回购销毁节奏</div></div>
+      </div>
+
+      <!-- mechanics -->
+      <div class="section">
+        <div class="eyebrow">三大机制</div>
+        <div class="h2">全链上、可验证的通缩引擎</div>
+        <div class="grid grid-3" style="margin-top:26px">
+          <div class="card feat">
+            <div class="ico">💧</div><h3>3 / 3 交易税</h3>
+            <p>买卖各 3%，全部换成 BNB 沉淀进回购金库,不进任何人口袋。</p>
+            <span class="badge">全进金库</span>
+          </div>
+          <div class="card feat">
+            <div class="ico">🔥</div><h3>每分钟回购销毁</h3>
+            <p>金库有弹药就每分钟花 0.02 BNB 买回骏马打入黑洞,持续通缩。</p>
+            <span class="badge">链上自驱动</span>
+          </div>
+          <div class="card feat">
+            <div class="ico">🐴</div><h3>质押返本 120%</h3>
+            <p>即时返 20% 到钱包,50 天线性释放 100%,直推再奖 5%。</p>
+            <span class="badge">1 母带 N</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- fairness guards -->
+      <div class="section" style="padding-top:0">
+        <div class="grid grid-2">
+          <div class="card">
+            <div class="eyebrow">链上护栏</div>
+            <div class="h2" style="font-size:22px">写死的公平承诺</div>
+            <div style="margin-top:8px">
+              <div class="kv"><span class="k">交易税硬顶</span><span class="val gold">≤ 10%,只能降不能升</span></div>
+              <div class="kv"><span class="k">金库 BNB</span><span class="val">无提现口,只能回购销毁</span></div>
+              <div class="kv"><span class="k">待换手续费</span><span class="val">owner 也拿不走</span></div>
+              <div class="kv"><span class="k">开盘前</span><span class="val">禁止转账,防抢跑</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="eyebrow">合约地址</div>
+            <div class="h2" style="font-size:22px">一切公开可查</div>
+            <div class="chips">
+              <a class="chip" id="chipToken" target="_blank" rel="noopener">代币合约 <b id="tokenAddrShort">未部署</b></a>
+              <a class="chip" id="chipStaking" target="_blank" rel="noopener">质押合约 <b id="stakingAddrShort">未部署</b></a>
+            </div>
+            <div class="note" style="margin-top:16px">
+              质押为返本 + 每日释放 + 直推奖励模型,收益依赖资金池充裕度。请理解规则与风险后参与。
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STAKE ============ -->
+    <section class="view" id="view-stake">
+      <div class="section">
+        <div class="eyebrow">质押生态</div>
+        <div class="h2">质押骏马 · 返本 120%</div>
+        <div class="fairness" style="justify-content:flex-start;margin-top:14px">
+          <span class="pill">即时 20%</span><span class="pill">每日 2%</span>
+          <span class="pill">50 天</span><span class="pill">直推 5%</span>
+          <span class="pill">合计返 120%</span>
+        </div>
+
+        <div id="stakeGate" class="gate card" style="margin-top:22px">
+          <div class="emblem-lg">🐴</div>
+          <div class="h2" style="font-size:20px">连接钱包后开始质押</div>
+          <button class="btn btn-primary" id="gateConnect" style="margin-top:14px">连接钱包</button>
+        </div>
+
+        <div id="stakePanel" class="hidden" style="margin-top:22px">
+          <div class="grid grid-2">
+            <div class="card">
+              <div class="kv"><span class="k">钱包余额</span><span class="val gold" id="myBal">—</span></div>
+              <div class="kv"><span class="k">推荐人(上线)</span><span class="val addr" id="myUpline">—</span></div>
+              <div class="kv"><span class="k">质押状态</span><span class="val" id="stakeOpen">—</span></div>
+              <div class="field" style="margin-top:16px">
+                <label>质押数量 (JUNMA)</label>
+                <div class="input-row">
+                  <input class="input" id="stakeAmt" type="number" min="0" placeholder="例如 10000" />
+                  <button class="btn btn-ghost" id="maxBtn">MAX</button>
+                </div>
+              </div>
+              <div class="note" id="refNote" style="margin-bottom:12px">支持多次质押,每笔订单独立计息、独立释放。</div>
+              <button class="btn btn-primary btn-block" id="stakeBtn">授权并质押</button>
+            </div>
+            <div class="card">
+              <div class="eyebrow">预览</div>
+              <div class="h2" style="font-size:20px">你将获得</div>
+              <div class="kv"><span class="k">即时到账 (20%)</span><span class="val gold" id="pvInstant">—</span></div>
+              <div class="kv"><span class="k">每日释放 (2%)</span><span class="val" id="pvDaily">—</span></div>
+              <div class="kv"><span class="k">50 天累计释放</span><span class="val" id="pvTotal">—</span></div>
+              <div class="kv"><span class="k">合计返还</span><span class="val gold" id="pvSum">—</span></div>
+              <div class="note warn" style="margin-top:14px" id="poolNote">奖励池余额: — JUNMA</div>
+            </div>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;margin:30px 0 14px">
+            <div class="h2" style="font-size:20px;margin:0">我的质押订单</div>
+            <button class="btn btn-ghost btn-sm" id="claimAllBtn">一键领取全部</button>
+          </div>
+          <div id="ordersList" class="grid" style="gap:14px"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BIND ============ -->
+    <section class="view" id="view-bind">
+      <div class="section">
+        <div class="eyebrow">绑定关系</div>
+        <div class="h2">邀请好友 · 直推奖 5%</div>
+        <div class="sub" style="margin-top:8px">下线每质押一笔,你立即获得其质押额 5% 的骏马奖励。绑定一次,永久有效。</div>
+
+        <div id="bindGate" class="gate card" style="margin-top:22px">
+          <div class="emblem-lg">🐴</div>
+          <div class="h2" style="font-size:20px">连接钱包后查看你的关系网</div>
+          <button class="btn btn-primary" id="gateConnect2" style="margin-top:14px">连接钱包</button>
+        </div>
+
+        <div id="bindPanel" class="hidden" style="margin-top:22px">
+          <div class="grid grid-2">
+            <div class="card">
+              <div class="eyebrow">我的专属邀请链接</div>
+              <div class="h2" style="font-size:20px">分享给好友</div>
+              <div class="reflink" style="margin-top:12px">
+                <input class="input" id="refLink" readonly />
+                <button class="btn btn-primary" id="copyRef">复制</button>
+              </div>
+              <div class="note" style="margin-top:14px">好友通过此链接打开并质押后,自动成为你的直推。</div>
+            </div>
+            <div class="card">
+              <div class="eyebrow">我的上线</div>
+              <div class="h2" style="font-size:20px">推荐关系</div>
+              <div id="uplineBound" class="hidden">
+                <div class="kv"><span class="k">已绑定上线</span><span class="val addr gold" id="bUpline">—</span></div>
+                <div class="note" style="margin-top:12px">绑定关系已锁定,不可更改。</div>
+              </div>
+              <div id="uplineUnbound">
+                <div class="field">
+                  <label>绑定上线地址(可选)</label>
+                  <div class="input-row">
+                    <input class="input" id="bindAddr" placeholder="0x... 推荐你的人的地址" />
+                    <button class="btn btn-ghost" id="bindBtn">绑定</button>
+                  </div>
+                </div>
+                <div class="note">也可以直接用对方的邀请链接打开本站,首次质押时自动绑定。</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-3" style="margin-top:16px">
+            <div class="card stat"><div class="v" id="tDirects">—</div><div class="k">直推人数</div></div>
+            <div class="card stat"><div class="v" id="tVolume">—</div><div class="k">直推质押量 (JUNMA)</div></div>
+            <div class="card stat"><div class="v" id="tEarned">—</div><div class="k">已获直推奖 (JUNMA)</div></div>
+          </div>
+
+          <div class="card" style="margin-top:16px">
+            <div class="eyebrow">我的直推列表</div>
+            <div class="team-list" id="directsList"><div class="note">暂无直推</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <div>🐴 骏马 JUNMA · PancakeSwap V2 · 公平公正公开透明</div>
+      <div style="display:flex;gap:16px">
+        <a id="lnkTwitter" class="hidden" target="_blank" rel="noopener">Twitter</a>
+        <a id="lnkTelegram" class="hidden" target="_blank" rel="noopener">Telegram</a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast"></div>
+
+  <script src="vendor/ethers.min.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
