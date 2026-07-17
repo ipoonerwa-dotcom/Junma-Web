@@ -43,6 +43,33 @@
     toastTimer = setTimeout(() => (t.className = ""), 3600);
   }
 
+  // Robust copy: in-app browsers (wallet webviews) often block navigator.clipboard,
+  // so fall back to selecting the field + execCommand, then to a manual long-press hint.
+  async function copyRefLink() {
+    const inp = el("refLink");
+    const text = inp.value;
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return toast("邀请链接已复制 ✓");
+      }
+    } catch (e) { /* fall through */ }
+    try {
+      inp.removeAttribute("readonly");
+      inp.focus();
+      inp.select();
+      inp.setSelectionRange(0, text.length);
+      const ok = document.execCommand("copy");
+      inp.setAttribute("readonly", "");
+      if (ok) return toast("邀请链接已复制 ✓");
+    } catch (e) { /* fall through */ }
+    // last resort: leave it selected so the user can long-press → Copy
+    inp.removeAttribute("readonly");
+    inp.focus();
+    inp.select();
+    toast("已选中链接,请长按选择“复制”", true);
+  }
+
   // ---------------- static wiring ----------------
   function wireStatic() {
     if (hasToken) {
@@ -290,10 +317,7 @@
   // ---------------- bind view ----------------
   function wireBind() {
     el("gateConnect2").addEventListener("click", connect);
-    el("copyRef").addEventListener("click", () => {
-      const v = el("refLink").value;
-      navigator.clipboard.writeText(v).then(() => toast("邀请链接已复制")).catch(() => toast("复制失败", true));
-    });
+    el("copyRef").addEventListener("click", () => copyRefLink());
     el("bindBtn").addEventListener("click", doBind);
   }
 
