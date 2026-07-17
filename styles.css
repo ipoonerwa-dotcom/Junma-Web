@@ -259,9 +259,23 @@ img { max-width: 100%; }
   .grid-3 { grid-template-columns: 1fr; }
 }
 @media (max-width: 620px) {
-  .nav-links { display: none; }
+  /* nav becomes two rows: brand + connect on top, the three links centered below */
+  .nav-inner { flex-wrap: wrap; height: auto; min-height: 56px; padding: 9px 0; gap: 8px 10px; }
+  .brand { order: 1; font-size: 17px; }
+  #connectBtn { order: 2; margin-left: auto; }
+  .nav-spacer { display: none; }
+  .net-chip { display: none !important; }
+  .nav-links {
+    order: 3; display: flex; flex-basis: 100%; width: 100%;
+    justify-content: center; gap: 8px; margin: 0;
+  }
+  .nav-links a { padding: 9px 18px; font-size: 14.5px; }
+
   .grid-4, .grid-2 { grid-template-columns: 1fr; }
   .section { padding: 44px 0; }
   .input-row { flex-direction: column; }
+  .reflink { flex-wrap: wrap; }
+  .reflink .input { min-width: 0; }
+  .reflink .btn { flex: 1; }
   body::after { font-size: 30vh; }
 }
